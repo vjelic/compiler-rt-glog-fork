@@ -11,6 +11,7 @@ check_include_file(unwind.h HAVE_UNWIND_H)
 # Top level target used to build all compiler-rt libraries.
 add_custom_target(compiler-rt ALL)
 add_custom_target(install-compiler-rt)
+add_custom_target(install-compiler-rt-stripped)
 set_target_properties(compiler-rt PROPERTIES FOLDER "Compiler-RT Misc")
 
 # Setting these variables from an LLVM build is sufficient that compiler-rt can
@@ -160,6 +161,8 @@ macro(test_targets)
       else()
         test_target_arch(powerpc64le "" "-m64")
       endif()
+    elseif("${COMPILER_RT_DEFAULT_TARGET_ARCH}" MATCHES "ppc64le")
+       test_target_arch(powerpc64le "" "-m64")
     elseif("${COMPILER_RT_DEFAULT_TARGET_ARCH}" MATCHES "s390x")
       test_target_arch(s390x "" "")
     elseif("${COMPILER_RT_DEFAULT_TARGET_ARCH}" MATCHES "mipsel|mips64el")
